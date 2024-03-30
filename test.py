@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 import os
 import requests
+import time
 
 load_dotenv()
 
@@ -16,13 +17,15 @@ response = requests.post(
         "image": open("./IMG_1984.jpg", "rb")
     },
     data={
-        "prompt": "Replace hairstyle with a high quiff",
+        "prompt": "Replace hairstyle with a mullet",
         "search_prompt": "hair",
     },
 )
 
+t = int(time.time()) 
+
 if response.status_code == 200:
-    with open("output.png", "wb") as f:
+    with open(f"./outputs/{t}.png", "wb") as f:
         f.write(response.content)
 else:
     raise Exception(str(response.json()))
